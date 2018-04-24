@@ -1,8 +1,8 @@
 import { h, app } from "hyperapp";
 
 const state = {
-  count: 0
-}
+  count: 0,
+};
 
 const actions = {
   down: value => state => ({ count: state.count - value }),
