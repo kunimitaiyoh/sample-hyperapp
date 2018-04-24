@@ -1,0 +1,25 @@
+{
+  "name": "sample-hyperapp",
+  "version": "1.0.0",
+  "description": "a sample frontend application with Hypperapp.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kunimitaiyoh/sample-hyperapp.git"
+  },
+  "author": "KUNIMI Taiyoh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kunimitaiyoh/sample-hyperapp/issues"
+  },
+  "homepage": "https://github.com/kunimitaiyoh/sample-hyperapp#readme",
+  "dependencies": {
+    "hyperapp": "^1.2.5"
+  },
+  "devDependencies": {
+    "webpack": "^4.6.0"
+  }
+}
