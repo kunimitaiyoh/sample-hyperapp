@@ -1,19 +1,28 @@
 const path = require("path");
 
 module.exports = {
-    entry: './index.jsx',
+    entry: [path.resolve(__dirname, './index.jsx')],
     output: {
-        path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist'),
     },
     module: {
         rules: [{
-            test: /\.jsx$/,
+            test: /\.tsx?$/,
             exclude: /node_modules/,
-            loader: 'babel-loader',
-            query: {
-                plugins: [["transform-react-jsx", { "pragma": "h" }]]
+            enforce: 'pre',
+            loader: 'tslint-loader',
+            options: {
+                failOnHint: true
             }
+        },
+        {
+            test: /\.tsx?$/,
+            exclude: /node_modules/,
+            loader: 'ts-loader'
         }]
+    },
+    resolve: {
+        extensions: ['.ts', '.tsx']
     }
 };
