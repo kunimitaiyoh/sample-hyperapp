@@ -1,7 +1,9 @@
 const path = require("path");
 
 module.exports = {
-    entry: [path.resolve(__dirname, './index.jsx')],
+    // https://webpack.js.org/concepts/mode/
+    mode: 'development',
+    entry: [path.resolve(__dirname, './src/app.ts')],
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
@@ -23,6 +25,9 @@ module.exports = {
         }]
     },
     resolve: {
+        alias: {
+            '@': path.resolve(__dirname, 'src')
+        },
         extensions: ['.ts', '.tsx']
     }
 };

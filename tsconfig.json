@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "es2015",
+        "strict": true,
+        "jsx": "react",
+        "jsxFactory": "h",
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": true,
+        "baseUrl": ".",
+        "types": [
+        ],
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        },
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
