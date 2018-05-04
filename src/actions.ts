@@ -1,12 +1,12 @@
-import { ActionsType, ActionResult } from 'hyperapp';
-import { State } from '@/state';
+import { IState } from "@/state";
+import { ActionResult, ActionsType } from "hyperapp";
 
-export interface Actions {
-  down: (value: number) => (state: State) => ActionResult<State>;
-  up: (value: number) => (state: State) => ActionResult<State>;
+export interface IActions {
+  down: (value: number) => (state: IState) => ActionResult<IState>;
+  up: (value: number) => (state: IState) => ActionResult<IState>;
 }
 
-export const actions: ActionsType<State, Actions> = {
+export const actions: ActionsType<IState, IActions> = {
   down: (value: number) => (state) => {
     return { count: state.count - value };
   },

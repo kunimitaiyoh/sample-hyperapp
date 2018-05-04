@@ -20,8 +20,7 @@
   },
   "homepage": "https://github.com/kunimitaiyoh/sample-hyperapp#readme",
   "dependencies": {
-    "hyperapp": "^1.2.5",
-    "tslint-config-airbnb": "^5.8.0"
+    "hyperapp": "^1.2.5"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.4.1",

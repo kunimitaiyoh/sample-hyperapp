@@ -1,4 +1,4 @@
-import { h, app } from 'hyperapp';
+import { app, h } from "hyperapp";
 
 const state = {
   count: 0,

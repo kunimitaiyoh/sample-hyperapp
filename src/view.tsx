@@ -1,8 +1,8 @@
-import { h, app, View } from 'hyperapp';
-import { state, State } from '@/state';
-import { actions, Actions } from '@/actions';
+import { IActions } from "@/actions";
+import { IState } from "@/state";
+import { app, h, View } from "hyperapp";
 
-export const view: View<State, Actions> = (state, actions) => (
+export const view: View<IState, IActions> = (state, actions) => (
   <div>
     <h1>{state.count}</h1>
     <button onclick={() => actions.down(1)}>-</button>

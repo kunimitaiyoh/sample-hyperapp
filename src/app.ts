@@ -1,6 +1,6 @@
-import { h, app } from 'hyperapp';
-import { state, State } from '@/state';
-import { actions, Actions } from '@/actions';
-import { view } from '@/view';
+import { actions, IActions } from "@/actions";
+import { IState, state } from "@/state";
+import { view } from "@/view";
+import { app, h } from "hyperapp";
 
-app<State, Actions>(state, actions, view, document.body);
+app<IState, IActions>(state, actions, view, document.body);

@@ -1,7 +1,7 @@
-export interface State {
+export interface IState {
   count: number;
 }
 
-export const state: State = {
+export const state: IState = {
   count: 0,
 };
