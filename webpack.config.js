@@ -1,4 +1,5 @@
 const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     // https://webpack.js.org/concepts/mode/
@@ -7,6 +8,10 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
+    },
+    devServer: {
+        contentBase: 'dist',
+        port: 8000
     },
     module: {
         rules: [{
@@ -22,12 +27,22 @@ module.exports = {
             test: /\.tsx?$/,
             exclude: /node_modules/,
             loader: 'ts-loader'
+        },
+        {
+            test: /\.html$/,
+            exclude: /node_modules/,
+            loader: "html-loader"
         }]
     },
     resolve: {
         alias: {
             '@': path.resolve(__dirname, 'src')
         },
-        extensions: ['.ts', '.tsx']
-    }
+        extensions: ['.ts', '.tsx', '.js']
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: "./public/index.html"
+        })
+    ]
 };
