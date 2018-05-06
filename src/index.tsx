@@ -1,3 +1,5 @@
+import { IRouteState } from "@/context";
+import { ILoginActions, loginActions, LoginView } from "@/views/Login";
 import {
   Link,
   location,
@@ -5,14 +7,14 @@ import {
   LocationState,
   RenderProps,
   Route,
+  Switch,
 } from "@hyperapp/router";
-import { ActionsType, app, h, View } from "hyperapp";
+import { ActionResult, ActionsType, app, h, View } from "hyperapp";
 
-const Home = () => <h2>Home</h2>;
 const About = () => <h2>About</h2>;
-const Topic = ({ match }: RenderProps<{ topicId: string }>) => <h3>{match.params.topicId}</h3>;
+const Topic = ({ match }: RenderProps<ITopicParams>) => <h3>{match.params.topicId}</h3>;
 
-const TopicsView = ({ match }: RenderProps<{ topicId: string }>) => (
+const TopicsView = ({ match }: RenderProps<ITopicParams>) => (
   <div>
     <h2>Topics</h2>
     <ul>
@@ -33,41 +35,30 @@ const TopicsView = ({ match }: RenderProps<{ topicId: string }>) => (
   </div>
 );
 
-interface IRouteState {
-  location: LocationState;
+interface ITopicParams {
+  topicId: string;
 }
-const state: IRouteState = {
-  location: location.state,
-};
 
 interface IRouteActions {
   location: LocationActions;
+  loginActions: ILoginActions;
 }
 
 const routeActions: ActionsType<IRouteState, IRouteActions> = {
   location: location.actions,
+  loginActions: (loginActions),
 };
 
-const view: View<IRouteState, IRouteActions> = (s: IRouteState) => (
-  <div>
-    <ul>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/about">About</Link>
-      </li>
-      <li>
-        <Link to="/topics">Topics</Link>
-      </li>
-    </ul>
+const state: IRouteState = {
+  location: location.state,
+};
 
-    <hr />
-
-    <Route path="/" render={Home} />
-    <Route path="/about" render={About} />
-    <Route parent path="/topics" render={TopicsView} />
-  </div>
+const view: View<IRouteState, IRouteActions> = (s: IRouteState, a: IRouteActions) => (
+  <Switch>
+    <Route path="/" render={ LoginView } />
+    {/* <Route path="/register" render={ Register } /> */}
+    <Route parent path="/topics" render={ TopicsView } />
+  </Switch>
 );
 
 const main = app(state, routeActions, view, document.body);
