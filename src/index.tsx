@@ -1,5 +1,7 @@
 import { IRouteState } from "@/context";
+import { HomeView } from "@/views/Home";
 import { ILoginActions, loginActions, LoginView } from "@/views/Login";
+import { RegisterView } from "@/views/Register";
 import {
   Link,
   location,
@@ -54,11 +56,23 @@ const state: IRouteState = {
 };
 
 const view: View<IRouteState, IRouteActions> = (s: IRouteState, a: IRouteActions) => (
-  <Switch>
-    <Route path="/" render={ LoginView } />
-    {/* <Route path="/register" render={ Register } /> */}
-    <Route parent path="/topics" render={ TopicsView } />
-  </Switch>
+  <section>
+    <nav class="ui fixed inverted menu">
+      <div class="ui container">
+        <a href="/" class="header item">Microservice Architecture</a>
+        {/* <a href="#" class="item">設定</a> */}
+      </div>
+    </nav>
+    <div class="ui main container" style={{ paddingTop: "4em" }}>
+      <Switch>
+        <Route path="/" render={ HomeView } />
+        <Route path="/login" render={ LoginView } />
+        <Route path="/register" render={ RegisterView } />
+        <Route parent path="/article" render={ TopicsView } />
+        <Route parent render={ () => <p>Not Found</p> } />
+      </Switch>
+    </div>
+  </section>
 );
 
 const main = app(state, routeActions, view, document.body);
