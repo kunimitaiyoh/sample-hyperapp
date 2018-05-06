@@ -11,11 +11,32 @@ export const loginActions: ILoginActions = {
 };
 
 export const LoginView = (actions: ILoginActions) => (
-  <div>
-    <h2>Login</h2>
-    <input name="username" />
-    <input type="password" name="password" />
-    <button onclick={ actions.submit }>ログイン</button>
-    <p>または、<Link to="/register">新規登録</Link></p>
+  <div class="ui middle aligned center aligned grid">
+  <div class="column" style={{ maxWidth: "450px" }}>
+    <h2 class="ui teal image header">
+      <div class="content">ログイン</div>
+    </h2>
+    <form class="ui large form">
+      <div class="ui stacked segment">
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" name="mail" placeholder="E-mail address" />
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input type="password" name="password" placeholder="Password" />
+          </div>
+        </div>
+        <div class="ui fluid large teal submit button">ログイン</div>
+      </div>
+      <div class="ui error message"></div>
+    </form>
+    <div class="ui message">
+      または <Link to="/register">新規登録</Link>
+    </div>
   </div>
+</div>
 );
