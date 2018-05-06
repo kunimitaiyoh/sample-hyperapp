@@ -1,9 +1,10 @@
+import { AppClient } from "@/clients/AppClient";
 import { HomeView } from "@/views/Home";
 import { ILoginActions, loginActions, LoginView } from "@/views/Login";
 import {
   IRegisterActions,
   IRegisterState,
-  RegisterActions,
+  registerActions,
   registerState,
   RegisterView,
 } from "@/views/Register";
@@ -17,6 +18,11 @@ import {
   Switch,
 } from "@hyperapp/router";
 import { ActionResult, ActionsType, app, h, View } from "hyperapp";
+
+declare const API_HOST: string;
+const host = API_HOST;
+
+const client = new AppClient(host);
 
 const About = () => <h2>About</h2>;
 const Topic = ({ match }: RenderProps<ITopicParams>) => <h3>{match.params.topicId}</h3>;
@@ -49,23 +55,23 @@ interface ITopicParams {
 interface IRouteActions {
   location: LocationActions;
   loginActions: ILoginActions;
-  registerActions: IRegisterActions;
+  register: IRegisterActions;
 }
 
 const routeActions: ActionsType<IRouteState, IRouteActions> = {
   location: location.actions,
   loginActions: (loginActions),
-  registerActions: (RegisterActions),
+  register: (registerActions),
 };
 
-interface IRouteState {
+export interface IRouteState {
   location: LocationState;
-  registerState: IRegisterState;
+  register: IRegisterState;
 }
 
 const state: IRouteState = {
   location: location.state,
-  registerState: (registerState),
+  register: (registerState),
 };
 
 const view: View<IRouteState, IRouteActions> = (s: IRouteState, a: IRouteActions) => (
@@ -73,14 +79,16 @@ const view: View<IRouteState, IRouteActions> = (s: IRouteState, a: IRouteActions
     <nav class="ui fixed inverted menu">
       <div class="ui container">
         <a href="/" class="header item">Microservice Architecture</a>
-        {/* <a href="#" class="item">設定</a> */}
       </div>
     </nav>
     <div class="ui main container" style={{ paddingTop: "4em" }}>
       <Switch>
         <Route path="/" render={ HomeView } />
         <Route path="/login" render={ LoginView } />
-        <Route path="/register" render={ () => RegisterView(s.registerState, a.registerActions) } />
+        <Route path="/register"
+            render={ () =>
+            <RegisterView state={ s.register } actions={ a.register }/>
+            } />
         <Route parent path="/article" render={ TopicsView } />
         <Route parent render={ () => <p>Not Found</p> } />
       </Switch>

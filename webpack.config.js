@@ -1,5 +1,8 @@
 const path = require("path");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+const host = process.env.API_HOST || "http://localhost:8080";
 
 module.exports = {
     // https://webpack.js.org/concepts/mode/
@@ -10,6 +13,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         publicPath: "/",
     },
+    devtool: 'inline-source-map',
     devServer: {
         historyApiFallback: true,
         contentBase: 'dist',
@@ -45,6 +49,9 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: "./public/index.html"
-        })
+        }),
+        new webpack.DefinePlugin({
+            API_HOST: JSON.stringify(host)
+        }),
     ]
 };
