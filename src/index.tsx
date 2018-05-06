@@ -86,7 +86,7 @@ const view: View<IRouteState, IRouteActions> = (s: IRouteState, a: IRouteActions
         <Route path="/" render={ HomeView } />
         <Route path="/login" render={ LoginView } />
         <Route path="/register"
-            render={ () => <RegisterView state={ s.register } acts={ a.register } /> } />
+            render={ () => <RegisterView state={ s.register } actions={ a.register } /> } />
         <Route parent path="/article" render={ TopicsView } />
         <Route parent render={ () => <p>Not Found</p> } />
       </Switch>

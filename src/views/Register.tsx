@@ -37,34 +37,41 @@ export const registerState: IRegisterState = {
   isLoading: false,
 };
 
-export const RegisterView = ({ state, acts }: { state: IRegisterState, acts: IRegisterActions }) => (
-  <div class={ classNames({ ui: true, form: true, loading: state.isLoading, error: state.isError }) }>
-    <div class="ui error message">
-      <div class="header">エラー</div>
-      <p>入力された項目にエラーがあります。</p>
-    </div>
-    <div class="field">
-      <label>メールアドレス</label>
-      <input type="text" placeholder="foo@example.com"
-          // value={ state.mail }
-          oninput={ (e: InputEvent ) => acts.update({ formData: { mail: e.target.value } }) }
+export const RegisterView = ({ state, actions }: { state: IRegisterState, actions: IRegisterActions }) => {
+  const edit = (patch: Partial<IRegisterData>) => actions.update({ formData: Object.assign(state.formData, patch) });
+
+  return (
+    <div class={ classNames({ ui: true, form: true, loading: state.isLoading, error: state.isError }) }>
+      <div class="ui error message">
+        <div class="header">エラー</div>
+        <p>入力された項目にエラーがあります。</p>
+      </div>
+      <div class="field">
+        <label>メールアドレス</label>
+        <input type="text" placeholder="foo@example.com"
+          value={ state.formData.mail }
+          oninput={ (e: InputEvent ) => edit({ mail: e.target.value }) }
           oncreate={ (e: HTMLInputElement) => e.focus()} />
+      </div>
+      <div class="field">
+        <label>名前</label>
+        <input type="text" placeholder="名前"
+          value={ state.formData.name }
+          oninput={ (e: InputEvent ) => edit({ name: e.target.value }) } />
+      </div>
+      <div class="field">
+        <label>パスワード</label>
+        <input type="password" placeholder="パスワード"
+          value={ state.formData.password }
+          oninput={ (e: InputEvent ) => edit({ password: e.target.value }) } />
+      </div>
+      <div class="field">
+        <label>パスワード（確認）</label>
+        <input type="text" placeholder="パスワード（確認）"
+          value={ state.formData.passwordConfirm }
+          oninput={ (e: InputEvent ) => edit({ passwordConfirm: e.target.value }) } />
+      </div>
+      <button class="ui submit button" onclick={ actions.submit }>登録</button>
     </div>
-    <div class="field">
-      <label>名前</label>
-      <input type="text" placeholder="名前"
-          oninput={ (e: InputEvent ) => acts.update({ formData: { name: e.target.value } }) } />
-    </div>
-    <div class="field">
-      <label>パスワード</label>
-      <input type="password" name="password" placeholder="パスワード"
-        oninput={ (e: InputEvent ) => acts.update({ formData: { password: e.target.value } }) } />
-    </div>
-    <div class="field">
-      <label>パスワード（確認）</label>
-      <input type="text" name="passwordConfirm" placeholder="パスワード（確認）"
-        oninput={ (e: InputEvent ) => acts.update({ formData: { passwordConfirm: e.target.value } }) } />
-    </div>
-    <button class="ui submit button" onclick={ acts.submit }>登録</button>
-  </div>
-);
+  );
+};
