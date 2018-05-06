@@ -1,7 +1,12 @@
-import { IRouteState } from "@/context";
 import { HomeView } from "@/views/Home";
 import { ILoginActions, loginActions, LoginView } from "@/views/Login";
-import { RegisterView } from "@/views/Register";
+import {
+  IRegisterActions,
+  IRegisterState,
+  RegisterActions,
+  registerState,
+  RegisterView,
+} from "@/views/Register";
 import {
   Link,
   location,
@@ -44,15 +49,23 @@ interface ITopicParams {
 interface IRouteActions {
   location: LocationActions;
   loginActions: ILoginActions;
+  registerActions: IRegisterActions;
 }
 
 const routeActions: ActionsType<IRouteState, IRouteActions> = {
   location: location.actions,
   loginActions: (loginActions),
+  registerActions: (RegisterActions),
 };
+
+interface IRouteState {
+  location: LocationState;
+  registerState: IRegisterState;
+}
 
 const state: IRouteState = {
   location: location.state,
+  registerState: (registerState),
 };
 
 const view: View<IRouteState, IRouteActions> = (s: IRouteState, a: IRouteActions) => (
@@ -67,7 +80,7 @@ const view: View<IRouteState, IRouteActions> = (s: IRouteState, a: IRouteActions
       <Switch>
         <Route path="/" render={ HomeView } />
         <Route path="/login" render={ LoginView } />
-        <Route path="/register" render={ RegisterView } />
+        <Route path="/register" render={ () => RegisterView(s.registerState, a.registerActions) } />
         <Route parent path="/article" render={ TopicsView } />
         <Route parent render={ () => <p>Not Found</p> } />
       </Switch>

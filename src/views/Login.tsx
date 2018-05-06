@@ -1,9 +1,8 @@
-import { IRouteState } from "@/context";
 import { Link } from "@hyperapp/router";
 import { ActionResult, ActionsType, app, h, View } from "hyperapp";
 
 export interface ILoginActions {
-  submit: (state: IRouteState) => ActionResult<IRouteState>;
+  submit: (state: {}) => ActionResult<{}>;
 }
 
 export const loginActions: ILoginActions = {
@@ -21,13 +20,13 @@ export const LoginView = (actions: ILoginActions) => (
         <div class="field">
           <div class="ui left icon input">
             <i class="user icon"></i>
-            <input type="text" name="mail" placeholder="E-mail address" />
+            <input type="text" name="mail" placeholder="メールアドレス" />
           </div>
         </div>
         <div class="field">
           <div class="ui left icon input">
             <i class="lock icon"></i>
-            <input type="password" name="password" placeholder="Password" />
+            <input type="password" name="password" placeholder="パスワード" />
           </div>
         </div>
         <div class="ui fluid large teal submit button">ログイン</div>

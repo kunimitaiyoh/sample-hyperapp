@@ -1,3 +1,4 @@
+import { IRegisterState } from "@/views/Register";
 import {
   Link,
   location,
@@ -8,6 +9,3 @@ import {
   Switch,
 } from "@hyperapp/router";
 
-export interface IRouteState {
-  location: LocationState;
-}
