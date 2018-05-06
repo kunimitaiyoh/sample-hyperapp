@@ -21,6 +21,8 @@
   "homepage": "https://github.com/kunimitaiyoh/sample-hyperapp#readme",
   "dependencies": {
     "@hyperapp/router": "^0.7.0",
+    "@types/classnames": "^2.2.3",
+    "classnames": "^2.2.5",
     "hyperapp": "^1.2.5"
   },
   "devDependencies": {

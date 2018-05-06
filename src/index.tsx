@@ -52,16 +52,16 @@ interface ITopicParams {
   topicId: string;
 }
 
-interface IRouteActions {
+export interface IRouteActions {
   location: LocationActions;
-  loginActions: ILoginActions;
+  login: ILoginActions;
   register: IRegisterActions;
 }
 
 const routeActions: ActionsType<IRouteState, IRouteActions> = {
   location: location.actions,
-  loginActions: (loginActions),
-  register: (registerActions),
+  login: (loginActions),
+  register: registerActions(location.actions, client),
 };
 
 export interface IRouteState {
@@ -86,9 +86,7 @@ const view: View<IRouteState, IRouteActions> = (s: IRouteState, a: IRouteActions
         <Route path="/" render={ HomeView } />
         <Route path="/login" render={ LoginView } />
         <Route path="/register"
-            render={ () =>
-            <RegisterView state={ s.register } actions={ a.register }/>
-            } />
+            render={ () => <RegisterView state={ s.register } acts={ a.register } /> } />
         <Route parent path="/article" render={ TopicsView } />
         <Route parent render={ () => <p>Not Found</p> } />
       </Switch>
