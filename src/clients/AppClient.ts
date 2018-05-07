@@ -64,7 +64,12 @@ export class AppClient {
 
   public async findArticle(id: number): Promise<IArticleResponse> {
     if (this.accessToken !== null) {
-      return fetch(this.host + "/articles/" + id, { headers: { Authorization: "Bearer " + this.accessToken.body } })
+      const options: RequestInit = {
+        headers: { Authorization: "Bearer " + this.accessToken.body },
+        method: "GET",
+        mode: "cors",
+      };
+      return fetch(this.host + "/articles/" + id, options)
         .then((response) => response.json().then((json) => response.ok ? json : Promise.reject(json)));
     } else {
       throw new TypeError();

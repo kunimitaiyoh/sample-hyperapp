@@ -1,4 +1,5 @@
 import { AppClient } from "@/clients/AppClient";
+import { articleActions, articleState, ArticleView, IArticleActions, IArticleState } from "@/views/Article";
 import { HomeView } from "@/views/Home";
 import { ILoginActions, ILoginState, loginActions, loginState, LoginView } from "@/views/Login";
 import {
@@ -54,25 +55,28 @@ interface ITopicParams {
 }
 
 export interface IRouteActions {
+  article: IArticleActions;
   location: LocationActions;
   login: ILoginActions;
   register: IRegisterActions;
 }
 
 const routeActions: ActionsType<IRouteState, IRouteActions> = {
+  article: articleActions(location.actions, client),
   location: location.actions,
-
   login: loginActions(location.actions, client),
   register: registerActions(location.actions, client),
 };
 
 export interface IRouteState {
+  article: IArticleState;
   location: LocationState;
   login: ILoginState;
   register: IRegisterState;
 }
 
 const state: IRouteState = {
+  article: articleState,
   location: location.state,
   login: loginState,
   register: (registerState),
@@ -91,7 +95,7 @@ const view: View<IRouteState, IRouteActions> = (s: IRouteState, a: IRouteActions
         <Route path="/login" render={ () => <LoginView state={ s.login } actions={ a.login } /> } />
         <Route path="/register"
             render={ () => <RegisterView state={ s.register } actions={ a.register } /> } />
-        <Route parent path="/article" render={ TopicsView } />
+        <Route path="/articles" render={ () => <ArticleView state={ s.article } actions={ a.article } /> } />
         <Route parent render={ () => <p>Not Found</p> } />
       </Switch>
     </div>
