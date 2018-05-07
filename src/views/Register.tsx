@@ -13,9 +13,10 @@ export interface IRegisterActions {
 export const registerActions: (location: LocationActions, client: AppClient) => IRegisterActions =
   (location, client) => ({
     submit: () => async (state, actions) => {
-      return new Promise((resolve) => resolve(actions.update({ isLoading: true })))
+      return new Promise((resolve) => resolve(actions.update({ isLoading: true, isError: false })))
         .then(() => client.register(state.formData))
-        .then((response) => response.ok ? location.go("/login") : actions.update({ isLoading: false, isError: true }));
+        .then((response) => response.ok ? location.go("/login") : actions.update({ isLoading: false, isError: true }))
+        .catch((reason) => actions.update({ isLoading: false, isError: true }));
     },
     update: (changed) => (state) => changed,
   });
@@ -28,10 +29,6 @@ export interface IRegisterState {
 
 export const registerState: IRegisterState = {
   formData:  {
-    mail: "",
-    name: "",
-    password: "",
-    passwordConfirm: "",
   },
   isError: false,
   isLoading: false,
@@ -41,10 +38,10 @@ export const RegisterView = ({ state, actions }: { state: IRegisterState, action
   const edit = (patch: Partial<IRegisterData>) => actions.update({ formData: Object.assign(state.formData, patch) });
 
   return (
-    <div class={ classNames({ ui: true, form: true, loading: state.isLoading, error: state.isError }) }>
+    <div class={ classNames("ui form", { loading: state.isLoading, error: state.isError }) }>
       <div class="ui error message">
         <div class="header">エラー</div>
-        <p>入力された項目にエラーがあります。</p>
+        <p>エラーが発生しました。</p>
       </div>
       <div class="field">
         <label>メールアドレス</label>
