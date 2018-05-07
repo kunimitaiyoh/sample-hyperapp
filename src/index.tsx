@@ -13,6 +13,7 @@ import {
   location,
   LocationActions,
   LocationState,
+  Redirect,
   RenderProps,
   Route,
   Switch,
@@ -60,7 +61,8 @@ export interface IRouteActions {
 
 const routeActions: ActionsType<IRouteState, IRouteActions> = {
   location: location.actions,
-  login: (loginActions),
+
+  login: loginActions(location.actions, client),
   register: registerActions(location.actions, client),
 };
 

@@ -31,6 +31,18 @@ export class AppClient {
     const body = AppClient.toFormParams(params);
     return fetch(this.host + "/users", { method: "POST", body: body as any });
   }
+
+  public async authenticate(params: Partial<ILoginData>): Promise<boolean> {
+    const body = AppClient.toFormParams(params);
+    body.append("grand_type", "password");
+    return fetch(this.host + "/oauth2/token", { method: "POST", body: body as any })
+      .then((response) => response.json().then((json) => response.ok ? json : Promise.reject(json)))
+      .then((data) => {
+        const token = data.access_token as string;
+        document.cookie = "Authorization=Bearer " + token;
+        return true;
+      }).catch((reason) => false);
+  }
 }
 
 export interface IRegisterData {
@@ -40,4 +52,9 @@ export interface IRegisterData {
   name: string;
   password: string;
   passwordConfirm: string;
+}
+
+export interface ILoginData {
+  username: string;
+  password: string;
 }

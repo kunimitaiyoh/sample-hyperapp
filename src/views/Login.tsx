@@ -1,16 +1,45 @@
-import { Link } from "@hyperapp/router";
+import { AppClient, ILoginData } from "@/clients/AppClient";
+import { Action } from "@/types";
+import { Link, LocationActions } from "@hyperapp/router";
+import classNames from "classnames";
 import { ActionResult, ActionsType, app, h, View } from "hyperapp";
 
 export interface ILoginActions {
-  submit: (state: {}) => ActionResult<{}>;
+  submit: () => Action<ILoginState, ILoginActions>;
+  update: (state: Partial<ILoginState>) => Action<ILoginState, ILoginActions>;
 }
 
-export const loginActions: ILoginActions = {
-  submit: (state) => undefined,
+export const loginActions: (location: LocationActions, client: AppClient) => ILoginActions =
+  (location, client) => ({
+    submit: () => async (state, actions) => {
+      return new Promise((resolve) => resolve({ isLoading: true, isError: false }))
+        .then(() => client.authenticate(state.formData))
+        .then((succeed) => {
+          if (succeed) {
+            return location.go("/home");
+          } else {
+            return actions.update({ isLoading: false, isError: true });
+          }
+        });
+    },
+    update: (changed) => (state, actions) => changed,
+  });
+
+export interface ILoginState {
+  formData: Partial<ILoginData>;
+  isError: boolean;
+  isLoading: boolean;
+}
+
+export const loginState: ILoginState = {
+  formData:  {
+  },
+  isError: false,
+  isLoading: false,
 };
 
-export const LoginView = (actions: ILoginActions) => (
-  <div class="ui middle aligned center aligned grid">
+export const LoginView = ({ state, actions }: { state: ILoginState, actions: ILoginActions }) => (
+  <div class={ classNames("ui middle aligned center aligned grid") }>
   <div class="column" style={{ maxWidth: "450px" }}>
     <h2 class="ui teal image header">
       <div class="content">ログイン</div>
@@ -20,7 +49,8 @@ export const LoginView = (actions: ILoginActions) => (
         <div class="field">
           <div class="ui left icon input">
             <i class="user icon"></i>
-            <input type="text" name="mail" placeholder="メールアドレス" />
+            <input type="text" placeholder="メールアドレス"
+            />
           </div>
         </div>
         <div class="field">
