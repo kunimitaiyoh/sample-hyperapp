@@ -1,6 +1,6 @@
 import { AppClient } from "@/clients/AppClient";
 import { HomeView } from "@/views/Home";
-import { ILoginActions, loginActions, LoginView } from "@/views/Login";
+import { ILoginActions, ILoginState, loginActions, loginState, LoginView } from "@/views/Login";
 import {
   IRegisterActions,
   IRegisterState,
@@ -68,11 +68,13 @@ const routeActions: ActionsType<IRouteState, IRouteActions> = {
 
 export interface IRouteState {
   location: LocationState;
+  login: ILoginState;
   register: IRegisterState;
 }
 
 const state: IRouteState = {
   location: location.state,
+  login: loginState,
   register: (registerState),
 };
 
@@ -86,7 +88,7 @@ const view: View<IRouteState, IRouteActions> = (s: IRouteState, a: IRouteActions
     <div class="ui main container" style={{ paddingTop: "4em" }}>
       <Switch>
         <Route path="/" render={ HomeView } />
-        <Route path="/login" render={ LoginView } />
+        <Route path="/login" render={ () => <LoginView state={ s.login } actions={ a.login } /> } />
         <Route path="/register"
             render={ () => <RegisterView state={ s.register } actions={ a.register } /> } />
         <Route parent path="/article" render={ TopicsView } />
