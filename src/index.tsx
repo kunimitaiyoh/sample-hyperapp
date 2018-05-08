@@ -1,6 +1,6 @@
 import { AppClient } from "@/clients/AppClient";
 import { articleActions, articleState, ArticleView, IArticleActions, IArticleState } from "@/views/Article";
-import { HomeView } from "@/views/Home";
+import { homeActions, homeState, HomeView, IHomeActions, IHomeState } from "@/views/Home";
 import { ILoginActions, ILoginState, loginActions, loginState, LoginView } from "@/views/Login";
 import {
   IRegisterActions,
@@ -56,6 +56,7 @@ interface ITopicParams {
 
 export interface IRouteActions {
   article: IArticleActions;
+  home: IHomeActions;
   location: LocationActions;
   login: ILoginActions;
   register: IRegisterActions;
@@ -63,6 +64,7 @@ export interface IRouteActions {
 
 const routeActions: ActionsType<IRouteState, IRouteActions> = {
   article: articleActions(location.actions, client),
+  home: homeActions(client),
   location: location.actions,
   login: loginActions(location.actions, client),
   register: registerActions(location.actions, client),
@@ -70,6 +72,7 @@ const routeActions: ActionsType<IRouteState, IRouteActions> = {
 
 export interface IRouteState {
   article: IArticleState;
+  home: IHomeState;
   location: LocationState;
   login: ILoginState;
   register: IRegisterState;
@@ -77,6 +80,7 @@ export interface IRouteState {
 
 const state: IRouteState = {
   article: articleState,
+  home: homeState,
   location: location.state,
   login: loginState,
   register: (registerState),
@@ -91,7 +95,7 @@ const view: View<IRouteState, IRouteActions> = (s: IRouteState, a: IRouteActions
     </nav>
     <div class="ui main container" style={{ paddingTop: "4em" }}>
       <Switch>
-        <Route path="/" render={ HomeView } />
+        <Route path="/" render={ () => <HomeView state={ s.home } actions={ a.home } /> } />
         <Route path="/login" render={ () => <LoginView state={ s.login } actions={ a.login } /> } />
         <Route path="/register"
             render={ () => <RegisterView state={ s.register } actions={ a.register } /> } />

@@ -75,6 +75,20 @@ export class AppClient {
       throw new TypeError();
     }
   }
+
+  public async searchUserArticles(): Promise<{ articles: IArticle[] }> {
+    if (this.accessToken !== null) {
+      const options: RequestInit = {
+        headers: { Authorization: "Bearer " + this.accessToken.body },
+        method: "GET",
+        mode: "cors",
+      };
+      return fetch(this.host + "/articles", options)
+        .then((response) => response.json().then((json) => response.ok ? json : Promise.reject(json)));
+    } else {
+      throw new TypeError();
+    }
+  }
 }
 
 export interface IRegisterData {
