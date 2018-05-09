@@ -23,7 +23,8 @@
     "@hyperapp/router": "^0.7.0",
     "@types/classnames": "^2.2.3",
     "classnames": "^2.2.5",
-    "hyperapp": "^1.2.5"
+    "hyperapp": "^1.2.5",
+    "immutable": "^3.8.2"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.4.1",
