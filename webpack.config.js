@@ -23,6 +23,11 @@ module.exports = {
         rules: [{
             test: /\.tsx?$/,
             exclude: /node_modules/,
+            loader: 'babel-loader?plugins=jsx-control-statements',
+        },
+        {
+            test: /\.tsx?$/,
+            exclude: /node_modules/,
             enforce: 'pre',
             loader: 'tslint-loader',
             options: {
