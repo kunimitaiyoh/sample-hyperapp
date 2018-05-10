@@ -23,16 +23,22 @@ module.exports = {
         rules: [{
             test: /\.tsx?$/,
             exclude: /node_modules/,
-            loader: 'babel-loader?plugins=jsx-control-statements',
-        },
-        {
-            test: /\.tsx?$/,
-            exclude: /node_modules/,
             enforce: 'pre',
             loader: 'tslint-loader',
             options: {
                 failOnHint: true
             }
+        },
+        {
+            test: /\.jsx?$/,
+            exclude: /node_modules/,
+            use: [{
+                loader: 'babel-loader',
+                options: {
+                    presets: ['react'],
+                    plugins: [["transform-react-jsx", { "pragma": "h" }], 'jsx-control-statements']
+                }
+            }]
         },
         {
             test: /\.tsx?$/,
@@ -49,7 +55,7 @@ module.exports = {
         alias: {
             '@': path.resolve(__dirname, 'src')
         },
-        extensions: ['.ts', '.tsx', '.js']
+        extensions: ['.ts', '.tsx', '.js', '.jsx']
     },
     plugins: [
         new HtmlWebpackPlugin({
