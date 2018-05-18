@@ -1,8 +1,11 @@
 export interface ValidationErrors {
-  general: Violation[]
-  fields: { [key: string]: Violation[] }
+  errors: Violation[];
 }
 
 export interface Violation {
-  message: string;
+  attributes: { [key: string]: any };
+  field: string | undefined;
+  invalidValue: any;
+  message: string | undefined;
+  type: string;
 }
