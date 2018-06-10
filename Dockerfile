@@ -7,6 +7,7 @@ RUN apt-get update \
 
 RUN mkdir /usr/src/sample
 COPY package.json /usr/src/sample
+COPY package-lock.json /usr/src/sample
 WORKDIR /usr/src/sample
 RUN npm install
 COPY . /usr/src/sample
